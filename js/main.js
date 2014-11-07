@@ -8,8 +8,8 @@ $(document).ready(function(){
     };
     window.template = function(id){ return _.template( $('#' + id).html() );}
     window.urlBuilder = function(params){
-	// var baseURL = 'http://localhost:3000/sections'
-	var baseURL = 'http://cuny-first-papi.herokuapp.com/sections'
+	var baseURL = 'http://localhost:3000/sections'
+	// var baseURL = 'http://cuny-first-papi.herokuapp.com/sections'
 	
 	if ( _.isEmpty(params) ) {
 	    return baseURL+"?verbose=true";
@@ -19,7 +19,7 @@ $(document).ready(function(){
 
 	_.forEach(params, function(value, key) {
 	    if(!_.isEmpty(value)){
-		finalURL = finalURL + key + "=" + value + "&"
+		finalURL = finalURL + key + "=" + value + "&";
 	    }
 	});
 	
@@ -31,25 +31,26 @@ $(document).ready(function(){
 //COLLECTION    
     App.Collections.Sections = Backbone.Collection.extend({
     	model: App.Models.Section,
-	// initialize: function(){
-	    // this.on('remove', this.hideModel);
-	// },
 
 	hideModel: function(model){
 	    model.trigger('hide');
-	    console.log("hiding");
 	}
     });
 
-//ITEM VIEW
+//ITEM VIEW: SEARCH RESULT
     App.Views.Section = Backbone.View.extend({
-    	tagName: "li",
-    	template: template('sectionTemplate'),
+    	tagName: "tr",
+    	template: template('sectionSearchResultTemplate'),
 	
 	initialize: function(){
-	    this.model.on('hide', function(){console.log(this.el);}, this);
+	    _.bindAll(this, 'addToShoppingCart');
 	    this.model.on('hide', this.remove, this);
+	    this.$el.on('click','button', this.addToShoppingCart);
+	},
 
+	addToShoppingCart: function(){
+	    sectionShoppingCartCollection.add(this.model);
+	    $("#shoppingCart").removeClass("hidden");
 	},
 
     	render: function(){
@@ -59,9 +60,9 @@ $(document).ready(function(){
     	}
     });
 
-//COLLECTION VIEW
+//COLLECTION VIEW: SEARCH RESULT
     App.Views.SectionList = Backbone.View.extend({
-    	tagName: "ul",
+    	tagName: "tbody",
     	render: function(){
     	    this.collection.each(function(model){
     		var view = new App.Views.Section({model: model});
@@ -73,33 +74,64 @@ $(document).ready(function(){
 
     	},
 	wipe: function(){
-	    console.log("The collection started with length "+this.collection.length)
 	    this.collection.each(function(model){
-		console.log("removing model "+ model.get("id"));
-		// this.collection.remove(model);
 		this.collection.hideModel(model);
 	    },this);
 	    this.collection.reset();
-	    console.log("wiped");
-	    console.log("The collection is now of length "+this.collection.length)
 
 	}
 
     });
+    
+//ITEM VIEW: SHOPPING CART
+    App.Views.SectionShoppingCartRow = Backbone.View.extend({
+    	tagName: "tr",
+    	template: template('sectionCartItemTemplate'),
+	
+	initialize: function(){
+	    this.model.on('hide', this.remove, this);
+	},
 
-    var sectionCollection = new App.Collections.Sections();
-    var sectionListView = new App.Views.SectionList({collection: sectionCollection});
-    // window.sectionCollection = new App.Collections.Sections();
-    // window.sectionListView = new App.Views.SectionList({collection: sectionCollection});
+    	render: function(){
+    	    this.$el.html(this.template(this.model.toJSON()));
+	    return this;
 
+    	}
+    });
+
+   
+//COLLECTION VIEW: SHOPPING CART
+    App.Views.SectionShoppingCartTable = Backbone.View.extend({
+	
+    	tagName: "tbody",
+	initialize: function(){
+	    this.collection.on("add", this.addOne, this);
+	},
+	
+    	render: function(){
+    	    this.collection.each(this.addOne, this);
+    	},
+	
+	addOne: function(model){
+    	    var view = new App.Views.SectionShoppingCartRow({model: model});
+	    view.render();
+	    this.$el.append(view.el);
+	}
+	
+    });
+
+
+    var sectionSRCollection = new App.Collections.Sections();
+    var sectionSRTableView = new App.Views.SectionList({collection: sectionSRCollection});
+    var sectionShoppingCartCollection = new App.Collections.Sections();
+    var sectionShoppingCartTableView = new App.Views.SectionShoppingCartTable({collection: sectionShoppingCartCollection});
     var params = {};
 
 //NEW SEARCH BUTTON    
     $("#new_search").on("click", function(){
-	console.log("Begin wipe");
-	sectionCollection.each(function(model){console.log(model.get("id"));})
-	sectionListView.wipe();
+	sectionSRTableView.wipe();
 	$("#new_search").addClass("hidden");
+	$("#searchResults").addClass("hidden");
 	$("#searchOptions").show();
     });
 
@@ -134,18 +166,20 @@ $(document).ready(function(){
 	var url = urlBuilder(params);
 	console.log(url);
 
-	sectionCollection.url = url;
-	sectionCollection.fetch();
+	sectionSRCollection.url = url;
+	sectionSRCollection.fetch();
 	
 	
 	$("#searchOptions").hide();
 	$("#wait").removeClass("hidden");
-	$.when( sectionCollection.fetch() ).done(function(){
-	    console.log("sectionCollection is of length "+sectionCollection.length);
-	    sectionListView.render(); 
+	$.when( sectionSRCollection.fetch() ).done(function(){
+	    sectionSRTableView.render();
+	    sectionShoppingCartTableView.render();
 	    $("#wait").addClass("hidden");
 	    $("#new_search").removeClass("hidden");
-	    $("#app").append(sectionListView.$el);
+	    $("#searchResults").removeClass("hidden");
+	    $("#searchResultsTable").append(sectionSRTableView.$el);
+	    $("#shoppingCartTable").append(sectionShoppingCartTableView.$el);
 	}).fail(function(){ alert("failed to load from API"); });
 
 	event.preventDefault();

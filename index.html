@@ -11,9 +11,27 @@
   <body class="container">
     <div id="app">
       
+      <div id="shoppingCart" class="hidden">
+	<table class="table" id="shoppingCartTable">
+	  <caption>Shopping Cart</caption>
+	  <thead>
+	    <tr>
+	      <th></th>
+	      <th>Class</th>
+	      <th>Section Number</th>
+	      <th>Instructor</th>
+	      <th>Days</th>
+	      <th>Time</th>
+	      <th>Location</th>
+	    </tr>
+	  </thead>
+	</table>
+      </div>
+      <!-- end shopping cart div -->
+
+      
       <form id="searchOptions" action="">
 
-	
 	<label for="department_id_select">Department</label>
 	<select id="department_id_select">
 	  <option value="">Choose Department</option>
@@ -211,26 +229,74 @@
       
       <button id="new_search" class="hidden">New Search</button>
       <p id="wait" class="hidden">Loading search results...</p>
+      
+      
+      <div id="searchResults" class="hidden">
+	<table id="searchResultsTable" class="table table-hover">
+	  <caption>Search Results</caption>
+	  <thead>
+	    <tr>
+	      <th></th>
+	      <th>Class</th>
+	      <th>Section Number</th>
+	      <th>Instructor</th>
+	      <th>Days</th>
+	      <th>Time</th>
+	      <th>Location</th>
+	    </tr>
+	  </thead>
+	</table>
+      </div>
+      <!-- end shopping cart div -->
+
+
+      
 
     </div>
+    <!-- end app div -->
+
     <script src="js/jquery.js"></script>
     <script src="js/underscore.js"></script>
     <script src="js/backbone.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/main.js"></script>
     
-    <script id="sectionTemplate" type="text/template">
-      <%= id %> | <%= course.name %> Time:  <%= start_time %> - <%= end_time %> 
-      <% if (monday) { %> M <% } %>
-      <% if (tuesday) { %> T <% } %>
-      <% if (wednesday) { %> W <% } %>
-      <% if (thursday) { %> TH <% } %>
-      <% if (friday) { %> F <% } %>
-      <% if (saturday) { %> S <% } %>
-      <% if (sunday) { %> SU <% } %>
-      <%= instructor.last_name %>  
-      | <%= location.name %>
-    </script>
+    <script id="sectionSearchResultTemplate" type="text/template">
+            <td><button class="selectButton">Select</button></td>
+            <td><%= course.name %></td>
+            <td><%= id %></td>
+            <td><%= instructor.last_name %></td>
+            <td>
+	      <% if (monday) { %> M <% } %>
+	      <% if (tuesday) { %> T <% } %>
+	      <% if (wednesday) { %> W <% } %>
+	      <% if (thursday) { %> TH <% } %>
+	      <% if (friday) { %> F <% } %>
+	      <% if (saturday) { %> S <% } %>
+	      <% if (sunday) { %> SU <% } %>
+	    </td>
+            <td><%= start_time %> - <%= end_time %></td>
+            <td><%= location.name %></td>
+     </script>
+
+    <script id="sectionCartItemTemplate" type="text/template">
+            <td><button>Remove</button></td>
+            <td><%= course.name %></td>
+            <td><%= id %></td>
+            <td><%= instructor.last_name %></td>
+            <td>
+	      <% if (monday) { %> M <% } %>
+	      <% if (tuesday) { %> T <% } %>
+	      <% if (wednesday) { %> W <% } %>
+	      <% if (thursday) { %> TH <% } %>
+	      <% if (friday) { %> F <% } %>
+	      <% if (saturday) { %> S <% } %>
+	      <% if (sunday) { %> SU <% } %>
+	    </td>
+            <td><%= start_time %> - <%= end_time %></td>
+            <td><%= location.name %></td>
+     </script>
+
 
 </body>
 </html>
