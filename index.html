@@ -1,10 +1,14 @@
 <!DOCTYPE html>
 <html>
+  
   <head>
-    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>CUNYfirst+</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
   </head>
-  <body>
+  
+  <body class="container">
     <div id="app">
       
       <form id="searchOptions" action="">
@@ -204,16 +208,28 @@
 	
         <input type="submit">
       </form>
+      
+      <button id="new_search" class="hidden">New Search</button>
+      <p id="wait" class="hidden">Loading search results...</p>
 
     </div>
     <script src="js/jquery.js"></script>
     <script src="js/underscore.js"></script>
     <script src="js/backbone.js"></script>
+    <script src="js/bootstrap.min.js"></script>
     <script src="js/main.js"></script>
     
     <script id="sectionTemplate" type="text/template">
       <%= id %> | <%= course.name %> Time:  <%= start_time %> - <%= end_time %> 
-      <%= instructor.last_name %> | <%= location.name %> 
+      <% if (monday) { %> M <% } %>
+      <% if (tuesday) { %> T <% } %>
+      <% if (wednesday) { %> W <% } %>
+      <% if (thursday) { %> TH <% } %>
+      <% if (friday) { %> F <% } %>
+      <% if (saturday) { %> S <% } %>
+      <% if (sunday) { %> SU <% } %>
+      <%= instructor.last_name %>  
+      | <%= location.name %>
     </script>
 
 </body>
