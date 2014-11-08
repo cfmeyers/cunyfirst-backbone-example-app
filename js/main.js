@@ -8,8 +8,8 @@ $(document).ready(function(){
     };
     window.template = function(id){ return _.template( $('#' + id).html() );}
     window.urlBuilder = function(params, array_params){
-	// var baseURL = 'http://localhost:3000/sections'
-	var baseURL = 'http://cuny-first-papi.herokuapp.com/sections'
+	var baseURL = 'http://localhost:3000/sections'
+	// var baseURL = 'http://cuny-first-papi.herokuapp.com/sections'
 	
 	if ( _.isEmpty(params) && _.isEmpty(array_params)) {
 	    return baseURL+"?verbose=true";
@@ -23,7 +23,6 @@ $(document).ready(function(){
 	    }
 	});
 	
-	// /sections?exclude_days[]=monday&exclude_days[]=tuesday
 	if(!_.isEmpty(array_params["include_days_val"])){
 	    _.forEach(array_params["include_days_val"], function(day){
 		finalURL = finalURL + "include_days[]="+day+"&";
@@ -34,7 +33,10 @@ $(document).ready(function(){
 	    _.forEach(array_params["exclude_days_val"], function(day){
 		finalURL = finalURL + "exclude_days[]="+day+"&";
 	    });
-
+	}
+	
+	if(!_.isEmpty(array_params["status"])){
+	    finalURL = finalURL + array_params["status"]+"&";
 	}
 
 	
@@ -202,6 +204,11 @@ $(document).ready(function(){
     $("#start_after_select").on("change", function() {
 	var start_after_val = $( "#start_after_select option:selected" ).val();
 	params["start_after"] = start_after_val;
+    });
+    
+    $("#status").on("change", function() {
+	var status = $( "#status option:selected" ).val();
+	array_params["status"] = status;
     });
     
     $("#registerButton").on("click", function(){

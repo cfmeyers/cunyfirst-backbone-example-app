@@ -223,6 +223,14 @@
 	  <option value="23:00"> 11:00 PM </option>
 	</select>
 	<br/>
+		
+	<label for="status">Status</label>
+	<select id="status">
+	  <option value="">Don't Care</option>
+	  <option value="open=true"> Only Open </option>
+	  <option value="closed=true"> Only Closed </option>
+	</select>
+	<br/>
 	
 	<label for="include-days">Must meet on</label>
 	<select id="include-days" multiple="multiple">
@@ -250,7 +258,7 @@
 
 	
 	<br/>
-        <input type="submit">
+        <input type="submit" value="Search!"> 
       </form>
       
       <button id="new_search" class="hidden">New Search</button>

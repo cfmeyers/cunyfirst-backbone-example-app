@@ -9,7 +9,7 @@ Some other open source plugins/libraries used include:
 
 ##TODO
 
--  [ ]  Add "closed/open" filter
+-  [X]  Add "closed/open" filter
 
 -  [ ]  Add "closed/open" column for search table
 
