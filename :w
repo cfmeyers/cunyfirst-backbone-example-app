@@ -11,10 +11,27 @@
   <body class="container">
     <div id="app">
 
+            
+      <div id="shoppingCart" class="hidden">
+	<table class="table" id="shoppingCartTable">
+	  <caption>Shopping Cart</caption>
+	  <thead>
+	    <tr>
+	      <th></th>
+	      <th>Class</th>
+	      <th>Section Number</th>
+	      <th>Instructor</th>
+	      <th>Days</th>
+	      <th>Time</th>
+	      <th>Location</th>
+	    </tr>
+	  </thead>
+	</table>
+	<button type="button" id="registerButton" class="btn btn-success">Register!</button>
+      </div>
+      <!-- end shopping cart div -->
+
       
-      <div class="jumbotron">
-	<h2>CUNYfirst+ Search</h2>
-	<br/>
       <form id="searchOptions" action="" class="form-horizontal">
 	
 	<div class="form-group">
@@ -273,31 +290,11 @@
 	</div>
 	
       </form>
- </div>     
-      <!-- end form div -->
+      
       <button id="new_search" class="hidden">New Search</button>
       <p id="wait" class="hidden">Loading search results...</p>
       
-                       
-      <div id="shoppingCart" class="hidden">
-	<table class="table" id="shoppingCartTable">
-	  <caption>Shopping Cart</caption>
-	  <thead>
-	    <tr>
-	      <th></th>
-	      <th>Class</th>
-	      <th>Section Number</th>
-	      <th>Instructor</th>
-	      <th>Days</th>
-	      <th>Time</th>
-	      <th>Location</th>
-	    </tr>
-	  </thead>
-	</table>
-	<button type="button" id="registerButton" class="btn btn-success">Register!</button>
-      </div>
-      <!-- end shopping cart div -->
- 
+      
       <div id="searchResults" class="hidden">
 	<table id="searchResultsTable" class="table table-hover">
 	  <caption>Search Results</caption>
@@ -314,8 +311,7 @@
 	  </thead>
 	</table>
       </div>
-
-
+      <!-- end shopping cart div -->
       
 
     </div>
@@ -329,7 +325,6 @@
     <script type="text/javascript" src="js/bootstrap-combobox.js"></script>
     <link rel="stylesheet" href="css/bootstrap-multiselect.css" type="text/css"/>    
     <link rel="stylesheet" href="css/bootstrap-combobox.css" type="text/css"/>    
-    <link rel="stylesheet" href="css/main.css" type="text/css"/>    
 
     <script src="js/main.js"></script>
     <script id="sectionSearchResultTemplate" type="text/template">

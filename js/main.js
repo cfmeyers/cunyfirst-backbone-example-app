@@ -8,8 +8,8 @@ $(document).ready(function(){
     };
     window.template = function(id){ return _.template( $('#' + id).html() );}
     window.urlBuilder = function(params, array_params){
-	// var baseURL = 'http://localhost:3000/sections'
-	var baseURL = 'http://cuny-first-papi.herokuapp.com/sections'
+	var baseURL = 'http://localhost:3000/sections'
+	// var baseURL = 'http://cuny-first-papi.herokuapp.com/sections'
 	
 	if ( _.isEmpty(params) && _.isEmpty(array_params)) {
 	    return baseURL+"?verbose=true";
@@ -191,15 +191,15 @@ $(document).ready(function(){
 	params["end_before"] = end_before_val;
     });
     
-    $("#end_after_select").on("change", function() {
-	var end_after_val = $( "#end_after_select option:selected" ).val();
-	params["end_after"] = end_after_val;
-    });
+    // $("#end_after_select").on("change", function() {
+    // 	var end_after_val = $( "#end_after_select option:selected" ).val();
+    // 	params["end_after"] = end_after_val;
+    // });
 
-    $("#start_before_select").on("change", function() {
-	var start_before_val = $( "#start_before_select option:selected" ).val();
-	params["start_before"] = start_before_val;
-    });
+    // $("#start_before_select").on("change", function() {
+    // 	var start_before_val = $( "#start_before_select option:selected" ).val();
+    // 	params["start_before"] = start_before_val;
+    // });
     
     $("#start_after_select").on("change", function() {
 	var start_after_val = $( "#start_after_select option:selected" ).val();
