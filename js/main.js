@@ -7,11 +7,11 @@ $(document).ready(function(){
 	Collections: {}
     };
     window.template = function(id){ return _.template( $('#' + id).html() );}
-    window.urlBuilder = function(params){
+    window.urlBuilder = function(params, array_params){
 	// var baseURL = 'http://localhost:3000/sections'
 	var baseURL = 'http://cuny-first-papi.herokuapp.com/sections'
 	
-	if ( _.isEmpty(params) ) {
+	if ( _.isEmpty(params) && _.isEmpty(array_params)) {
 	    return baseURL+"?verbose=true";
 	}
 	
@@ -23,9 +23,31 @@ $(document).ready(function(){
 	    }
 	});
 	
+	// /sections?exclude_days[]=monday&exclude_days[]=tuesday
+	if(!_.isEmpty(array_params["include_days_val"])){
+	    _.forEach(array_params["include_days_val"], function(day){
+		finalURL = finalURL + "include_days[]="+day+"&";
+	    });
+	}
+	
+	if(!_.isEmpty(array_params["exclude_days_val"])){
+	    _.forEach(array_params["exclude_days_val"], function(day){
+		finalURL = finalURL + "exclude_days[]="+day+"&";
+	    });
+
+	}
+
+	
 	return finalURL+"verbose=true";
     }
     
+    window.allCollectionIDs = function(collection){
+	collection.each(function(model){
+	    var id = model.get("id"); 
+	    console.log(id);
+	},this);
+    };
+   
     App.Models.Section = Backbone.Model.extend();
     
 //COLLECTION    
@@ -143,13 +165,11 @@ $(document).ready(function(){
     $("#shoppingCartTable").append(sectionShoppingCartTableView.$el);
 
     var params = {};
-    window.allCollectionIDs = function(collection){
-	collection.each(function(model){
-	    var id = model.get("id"); 
-	    console.log(id);
-	},this);
-    };
-
+    var array_params = {};
+    $('#include-days').multiselect({selectAllValue: 'multiselect-all'});
+    $('#exclude-days').multiselect({selectAllValue: 'multiselect-all'});
+    
+    
 //NEW SEARCH BUTTON    
     $("#new_search").on("click", function(){
 	sectionSRTableView.wipe();
@@ -183,15 +203,21 @@ $(document).ready(function(){
 	var start_after_val = $( "#start_after_select option:selected" ).val();
 	params["start_after"] = start_after_val;
     });
-
+    
     $("#registerButton").on("click", function(){
 	window.location.href='https://www.youtube.com/watch?v=dQw4w9WgXcQ';
     });
 
 
     $("#searchOptions").submit(function(event){
-	var url = urlBuilder(params);
+	array_params["include_days_val"]= $( "#include-days").val();
+	array_params["exclude_days_val"]= $( "#exclude-days").val();
+	console.log(array_params["include_days_val"]);
+	var url = urlBuilder(params, array_params);
 	console.log(url);
+
+    	// var include_days_val = $( "#include-days").val();
+    	// var exclude_days_val = $( "#exclude-days").val();
 
 	sectionSRCollection.url = url;
 	sectionSRCollection.fetch();

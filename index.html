@@ -10,7 +10,8 @@
   
   <body class="container">
     <div id="app">
-      
+
+            
       <div id="shoppingCart" class="hidden">
 	<table class="table" id="shoppingCartTable">
 	  <caption>Shopping Cart</caption>
@@ -222,9 +223,33 @@
 	  <option value="23:00"> 11:00 PM </option>
 	</select>
 	<br/>
+	
+	<label for="include-days">Must meet on</label>
+	<select id="include-days" multiple="multiple">
+	  <option value="monday">Monday</option>
+	  <option value="tuesday">Tuesday</option>
+	  <option value="wednesday">Wednesday</option>
+	  <option value="thursday">Thursday</option>
+	  <option value="friday">Friday</option>
+	  <option value="saturday">Saturday</option>
+	  <option value="sunday">Sunday</option>
+	</select>
+	
+	<label for="exclude-days">but not on</label>
+	<select id="exclude-days" multiple="multiple">
+	  <option value="monday">Monday</option>
+	  <option value="tuesday">Tuesday</option>
+	  <option value="wednesday">Wednesday</option>
+	  <option value="thursday">Thursday</option>
+	  <option value="friday">Friday</option>
+	  <option value="saturday">Saturday</option>
+	  <option value="sunday">Sunday</option>
+	</select>
+
 
 
 	
+	<br/>
         <input type="submit">
       </form>
       
@@ -260,8 +285,10 @@
     <script src="js/underscore.js"></script>
     <script src="js/backbone.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap-multiselect.js"></script>
+    <link rel="stylesheet" href="css/bootstrap-multiselect.css" type="text/css"/>    
+
     <script src="js/main.js"></script>
-    
     <script id="sectionSearchResultTemplate" type="text/template">
             <td><button class="selectButton">Select</button></td>
             <td><%= course.name %></td>
