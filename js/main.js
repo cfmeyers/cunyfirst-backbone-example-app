@@ -8,8 +8,8 @@ $(document).ready(function(){
     };
     window.template = function(id){ return _.template( $('#' + id).html() );}
     window.urlBuilder = function(params){
-	var baseURL = 'http://localhost:3000/sections'
-	// var baseURL = 'http://cuny-first-papi.herokuapp.com/sections'
+	// var baseURL = 'http://localhost:3000/sections'
+	var baseURL = 'http://cuny-first-papi.herokuapp.com/sections'
 	
 	if ( _.isEmpty(params) ) {
 	    return baseURL+"?verbose=true";
@@ -182,6 +182,10 @@ $(document).ready(function(){
     $("#start_after_select").on("change", function() {
 	var start_after_val = $( "#start_after_select option:selected" ).val();
 	params["start_after"] = start_after_val;
+    });
+
+    $("#registerButton").on("click", function(){
+	window.location.href='https://www.youtube.com/watch?v=dQw4w9WgXcQ';
     });
 
 
