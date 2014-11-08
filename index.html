@@ -35,7 +35,7 @@
       <form id="searchOptions" action="">
 
 	<label for="department_id_select">Department</label>
-	<select id="department_id_select">
+	<select id="department_id_select" class="combobox form-control">
 	  <option value="">Choose Department</option>
 	  <option value="1"> Accounting</option>
 	  <option value="2"> Adult Collegiate Education</option>
@@ -131,6 +131,7 @@
 	  <option value="92"> World Studies </option>
 	</select>
 	<br/>
+	
 	
 	<label for="end_before_select">Ends Before</label>
 	<select id="end_before_select">
@@ -282,8 +283,6 @@
 	</table>
       </div>
       <!-- end shopping cart div -->
-
-
       
 
     </div>
@@ -294,7 +293,9 @@
     <script src="js/backbone.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script type="text/javascript" src="js/bootstrap-multiselect.js"></script>
+    <script type="text/javascript" src="js/bootstrap-combobox.js"></script>
     <link rel="stylesheet" href="css/bootstrap-multiselect.css" type="text/css"/>    
+    <link rel="stylesheet" href="css/bootstrap-combobox.css" type="text/css"/>    
 
     <script src="js/main.js"></script>
     <script id="sectionSearchResultTemplate" type="text/template">
