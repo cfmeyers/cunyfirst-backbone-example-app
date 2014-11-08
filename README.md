@@ -7,6 +7,16 @@ Some other open source plugins/libraries used include:
 -  [bootstrap-multiselect](http://davidstutz.github.io/bootstrap-multiselect)
 
 
+##TODO
+
+-  [ ]  Add "closed/open" filter
+
+-  [ ]  Add "closed/open" column for search table
+
+-  [ ]  Add type-ahead dropdown for "Department" filter
+
+
+
 
 
 
