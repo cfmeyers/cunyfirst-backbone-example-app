@@ -49,7 +49,8 @@ $(document).ready(function(){
 	},
 
 	addToShoppingCart: function(){
-	    sectionShoppingCartCollection.add(this.model);
+	    var modelCopy = this.model.clone();
+	    sectionShoppingCartCollection.add(modelCopy);
 	    $("#shoppingCart").removeClass("hidden");
 	},
 
@@ -89,7 +90,13 @@ $(document).ready(function(){
     	template: template('sectionCartItemTemplate'),
 	
 	initialize: function(){
+	    _.bindAll(this, 'drop');
 	    this.model.on('hide', this.remove, this);
+	    this.$el.on('click','button', this.drop);
+	},
+	drop: function(){
+	    this.remove();
+	    sectionShoppingCartCollection.remove(this.model);
 	},
 
     	render: function(){
@@ -121,11 +128,27 @@ $(document).ready(function(){
     });
 
 
-    var sectionSRCollection = new App.Collections.Sections();
-    var sectionSRTableView = new App.Views.SectionList({collection: sectionSRCollection});
-    var sectionShoppingCartCollection = new App.Collections.Sections();
-    var sectionShoppingCartTableView = new App.Views.SectionShoppingCartTable({collection: sectionShoppingCartCollection});
+    // var sectionSRCollection = new App.Collections.Sections();
+    // var sectionSRTableView = new App.Views.SectionList({collection: sectionSRCollection});
+    // var sectionShoppingCartCollection = new App.Collections.Sections();
+    // var sectionShoppingCartTableView = new App.Views.SectionShoppingCartTable({collection: sectionShoppingCartCollection});
+
+       
+    window.sectionSRCollection = new App.Collections.Sections();
+    window.sectionSRTableView = new App.Views.SectionList({collection: sectionSRCollection});
+    window.sectionShoppingCartCollection = new App.Collections.Sections();
+    window.sectionShoppingCartTableView = new App.Views.SectionShoppingCartTable({collection: sectionShoppingCartCollection});
+    
+    sectionShoppingCartTableView.render();
+    $("#shoppingCartTable").append(sectionShoppingCartTableView.$el);
+
     var params = {};
+    window.allCollectionIDs = function(collection){
+	collection.each(function(model){
+	    var id = model.get("id"); 
+	    console.log(id);
+	},this);
+    };
 
 //NEW SEARCH BUTTON    
     $("#new_search").on("click", function(){
@@ -174,12 +197,10 @@ $(document).ready(function(){
 	$("#wait").removeClass("hidden");
 	$.when( sectionSRCollection.fetch() ).done(function(){
 	    sectionSRTableView.render();
-	    sectionShoppingCartTableView.render();
 	    $("#wait").addClass("hidden");
 	    $("#new_search").removeClass("hidden");
 	    $("#searchResults").removeClass("hidden");
 	    $("#searchResultsTable").append(sectionSRTableView.$el);
-	    $("#shoppingCartTable").append(sectionShoppingCartTableView.$el);
 	}).fail(function(){ alert("failed to load from API"); });
 
 	event.preventDefault();
