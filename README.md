@@ -17,6 +17,22 @@ Some other open source plugins/libraries used include:
 
 -  [X]  Add type-ahead dropdown for "Department" filter
 
+-  [ ]  Add table filter plugin
+
+-  [ ]  Move form to left side
+
+-  [ ]  Permanently show form
+
+-  [ ]  Add router
+
+-  [ ]  Add ability to link to specific searches
+
+-  [ ]  Style search results for mobile
+
+-  [ ]  Style shopping cart
+
+-  [ ]  Add "data loading" animation
+
 
 
 
