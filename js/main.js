@@ -8,8 +8,8 @@ $(document).ready(function(){
     };
     window.template = function(id){ return _.template( $('#' + id).html() );}
     window.urlBuilder = function(params, array_params){
-	// var baseURL = 'http://localhost:3000/sections'
-	var baseURL = 'http://cuny-first-papi.herokuapp.com/sections'
+	var baseURL = 'http://localhost:3000/sections'
+	// var baseURL = 'http://cuny-first-papi.herokuapp.com/sections'
 	
 	if ( _.isEmpty(params) && _.isEmpty(array_params)) {
 	    return baseURL+"?verbose=true";
